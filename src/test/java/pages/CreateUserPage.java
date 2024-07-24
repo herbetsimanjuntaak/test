@@ -26,10 +26,5 @@ public class CreateUserPage {
 
     public void postUser(){
         res = hitPostUser();
-        System.out.println(res.getBody().asString());
-    }
-
-    public void validationStatusCodeIsEquals(Integer status_code) {
-        assertThat(res.statusCode()).isEqualTo(status_code);
     }
 }

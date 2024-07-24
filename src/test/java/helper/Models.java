@@ -17,8 +17,8 @@ import static org.junit.Assert.assertEquals;
 
 public class Models {
 
-    private static RequestSpecification request;
-
+    public static RequestSpecification request;
+    public static Integer resStatusCode;
 
     public static void setUpHeaders() {
         request = given()
@@ -29,14 +29,17 @@ public class Models {
 
     public static Response getListUsers(String endpoint) {
         setUpHeaders();
-        return request.when().get(endpoint);
+        Response reqApi = request.when().get(endpoint);
+        resStatusCode = reqApi.statusCode();
+        return reqApi;
     }
 
     public static Response blankHeader(String endpoint) {
-        request = given()
-                .header("Content-Type", "application/json")
-                .header("Accept", "application/json");
-        return request.when().get(endpoint);
+        Response reqApi = given().
+                header("Content-Type", "application/json").
+                header("Accept", "application/json").get(endpoint);
+        resStatusCode = reqApi.statusCode();
+        return reqApi;
     }
 
     public static String setUpId(String endpoint, String user_id) {
@@ -45,9 +48,10 @@ public class Models {
 
     public static Response hitUserById(String endpoint) {
         setUpHeaders();
-        return request.when().get(endpoint);
+        Response reqApi = request.when().get(endpoint);
+        resStatusCode = reqApi.statusCode();
+        return reqApi;
     }
-
 
     public static Response hitUserParams(String endpoint, String params, String limit) {
         request = given()
@@ -71,7 +75,7 @@ public class Models {
         return request.when().get(endpoint);
     }
 
-    public static JSONObject  postCreatNewUser() {
+    public static JSONObject postCreatNewUser() {
         String title = generateRandomTitle();
         String firstName = generateFirstName();
         String lastName = generateLastName();
@@ -89,11 +93,14 @@ public class Models {
         return payload;
 
     }
+
     public static Response hitPostUser() {
         setUpHeaders();
         baseURI = CREATE_NEW_USERS;
         JSONObject payload = postCreatNewUser();
-        return request.body(payload.toString()).when().post(baseURI);
+        Response reqApi = request.body(payload.toString()).when().post(baseURI);
+        resStatusCode = reqApi.statusCode();
+        return reqApi;
     }
 
 }

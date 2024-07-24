@@ -68,6 +68,7 @@ public class GetUserPage {
     }
 
     public void validationResponseBodyGetListUsers() {
+        System.out.println(res.getBody().asString());
         String id = res.jsonPath().getString("data[0].id");
         String title = res.jsonPath().getString("data[0].title");
         String firstName = res.jsonPath().getString("data[0].firstName");
@@ -100,10 +101,10 @@ public class GetUserPage {
 
     public void validationResponseBodyGetUserById() {
         String firstName = res.jsonPath().getString("firstName");
-        assertThat(firstName).isIn("Edita");
+        assertThat(firstName).isIn("Carolina");
 
         String responseBody = res.getBody().asString();
-        Assert.assertTrue(responseBody.contains("Edita"));
+        Assert.assertTrue(responseBody.contains("Carolina"));
         System.out.println(responseBody);
     }
 
